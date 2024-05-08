@@ -142,6 +142,7 @@ module Rpush
           post = Net::HTTP::Post.new(@uri.path, 'Content-Type' => 'application/json',
                                      'Authorization' => "Bearer #{token}")
           post.body = @notification.as_json.to_json
+          log_warn(@notification.as_json.to_json)
           @http.request(@uri, post)
         end
 

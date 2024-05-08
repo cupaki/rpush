@@ -75,7 +75,7 @@ module Rpush
 
           def ios_notification
             json = {}
-            json['aps'] = notification&.slice(*IOS_NOTIFICATION_KEYS)
+            json['aps'] = notification&.slice(*IOS_NOTIFICATION_KEYS) || {}
             json
           end
 
@@ -83,8 +83,8 @@ module Rpush
             json = {
               'notification' => android_notification,
             }
-            json['collapse_key'] = collapse_key if collapse_key
-            json['priority'] = priority_str if priority
+            # json['collapse_key'] = collapse_key if collapse_key
+            # json['priority'] = priority_str if priority
             json['ttl'] = "#{expiry}s" if expiry
             json
           end
@@ -101,9 +101,9 @@ module Rpush
 
           def android_notification
             json = notification&.slice(*ANDROID_NOTIFICATION_KEYS) || {}
-            json['notification_priority'] = priority_for_notification if priority
-            json['sound'] = sound if sound
-            json['default_sound'] = !sound || sound == 'default' ? true : false
+            # json['notification_priority'] = priority_for_notification if priority
+            # json['sound'] = sound if sound
+            # json['default_sound'] = !sound || sound == 'default' ? true : false
             json
           end
 
