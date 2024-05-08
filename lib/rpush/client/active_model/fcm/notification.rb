@@ -8,6 +8,7 @@ module Rpush
           FCM_PRIORITIES = [FCM_PRIORITY_HIGH, FCM_PRIORITY_NORMAL]
 
           ROOT_NOTIFICATION_KEYS = %w[title body image].freeze
+          IOS_NOTIFICATION_KEYS = %w[category badge]
           ANDROID_NOTIFICATION_KEYS = %w[icon tag color click_action body_loc_key body_loc_args title_loc_key
                                          title_loc_args channel_id ticker sticky event_time local_only
                                          default_vibrate_timings default_light_settings vibrate_timings
@@ -56,6 +57,7 @@ module Rpush
             json = {
               'data' => data,
               'android' => android_config,
+              'apns' => apns_config,
               'token' => device_token
             }
             # Android does not appear to handle content_available anymore. Instead "priority" should be used
@@ -63,6 +65,18 @@ module Rpush
             # json['content_available'] = content_available if content_available
             json['notification'] = root_notification if notification
             { 'message' => json }
+          end
+
+          def apns_config
+            json = {
+              'payload' => ios_notification
+            }
+          end
+
+          def ios_notification
+            json = {}
+            json['aps'] = notification&.slice(*IOS_NOTIFICATION_KEYS)
+            json
           end
 
           def android_config
