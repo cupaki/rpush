@@ -38,7 +38,7 @@ module Rpush
         def handle_response(response)
           case response.code.to_i
           when 200
-            ok
+            ok(response)
           when 400
             bad_request(response)
           when 401
@@ -62,10 +62,11 @@ module Rpush
           end
         end
 
-        def ok
+        def ok(response)
           reflect(:fcm_delivered_to_recipient, @notification)
           mark_delivered
           log_info("#{@notification.id} sent to #{@notification.device_token}")
+          log_info(response)
         end
 
         def bad_request(response)
