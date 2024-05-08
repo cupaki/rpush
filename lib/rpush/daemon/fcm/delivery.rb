@@ -66,7 +66,7 @@ module Rpush
           reflect(:fcm_delivered_to_recipient, @notification)
           mark_delivered
           log_info("#{@notification.id} sent to #{@notification.device_token}")
-          log_info(response)
+          log_info(response.body)
         end
 
         def bad_request(response)
