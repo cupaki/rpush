@@ -82,6 +82,7 @@ module Rpush
           def android_config
             json = {
               'notification' => android_notification,
+              'data' => data
             }
             # json['collapse_key'] = collapse_key if collapse_key
             # json['priority'] = priority_str if priority
