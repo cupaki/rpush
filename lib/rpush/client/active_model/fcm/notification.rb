@@ -8,7 +8,7 @@ module Rpush
           FCM_PRIORITIES = [FCM_PRIORITY_HIGH, FCM_PRIORITY_NORMAL]
 
           ROOT_NOTIFICATION_KEYS = %w[title body image].freeze
-          IOS_NOTIFICATION_KEYS = %w[category badge]
+          IOS_NOTIFICATION_KEYS = %w[category badge alert]
           ANDROID_NOTIFICATION_KEYS = %w[icon tag color click_action body_loc_key body_loc_args title_loc_key
                                          title_loc_args channel_id ticker sticky event_time local_only
                                          default_vibrate_timings default_light_settings vibrate_timings
@@ -81,8 +81,7 @@ module Rpush
 
           def android_config
             json = {
-              'notification' => android_notification,
-              'data' => data
+              'notification' => android_notification
             }
             # json['collapse_key'] = collapse_key if collapse_key
             # json['priority'] = priority_str if priority
